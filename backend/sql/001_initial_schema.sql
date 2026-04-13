@@ -1,0 +1,47 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    role VARCHAR(20) NOT NULL DEFAULT 'RECEPCIONIST',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE guests (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    document VARCHAR(50) NOT NULL,
+    phone VARCHAR(30),
+    email VARCHAR(150),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE rooms (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    capacity INTEGER NOT NULL,
+    price NUMERIC(10, 2) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE reservations (
+    id SERIAL PRIMARY KEY, 
+    guest_id INTEGER REFERENCES guests(id) ON DELETE CASCADE,
+    room_id INTEGER REFERENCES rooms(id),
+    check_in DATE NOT NULL,
+    check_out DATE NOT NULL,
+    channel VARCHAR(50), 
+    status VARCHAR(20) NOT NULL DEFAULT 'CONFIRMED',
+    total_amount NUMERIC(10,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE payments (
+    id SERIAL PRIMARY KEY,
+    reservation_id INTEGER REFERENCES reservations(id) ON DELETE CASCADE,
+    amount NUMERIC(10,2) NOT NULL,
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    payment_method VARCHAR(50) NOT NULL,
+    status VARCHAR(20) DEFAULT 'PENDING'
+);

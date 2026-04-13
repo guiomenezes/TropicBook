@@ -1,0 +1,66 @@
+# =========================
+# 🔹 Ambiente Virtual
+# =========================
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+venv_tropicbook/
+
+# =========================
+# 🔹 Python cache / compilados
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# 🔹 Arquivos de build / distribuição
+# =========================
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# =========================
+# 🔹 Logs e arquivos temporários
+# =========================
+*.log
+*.tmp
+*.swp
+*.swo
+*.pid
+
+# =========================
+# 🔹 Arquivos de ambiente (SENSÍVEL)
+# =========================
+.env
+.env.*
+*.env
+
+# =========================
+# 🔹 Banco de dados local
+# =========================
+*.sqlite3
+*.db
+
+# =========================
+# 🔹 Testes / coverage
+# =========================
+.coverage
+htmlcov/
+.pytest_cache/
+
+# =========================
+# 🔹 Arquivos específicos de frameworks
+# =========================
+# FastAPI / Uvicorn
+*.reload
+
+# =========================
+# 🔹 Arquivos sensíveis diversos
+# =========================
+secrets.json
+credentials.json
