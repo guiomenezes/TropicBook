@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.database import get_db
 from app import models
+from app.auth.roles import require_role
 
 
 router = APIRouter(
@@ -11,7 +12,7 @@ router = APIRouter(
 )
 
 @router.get('/summary')
-def get_summary(db: Session = Depends(get_db)):
+def get_summary(db: Session = Depends(get_db), user= Depends(require_role(['ADMIN']))):
     total_guests = db.query(func.count(models.Guest.id)).scalar()
 
     total_rooms = db.query(func.count(models.Room.id)).scalar()

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app import models, schemas
+from app.auth.roles import require_role
 
 router = APIRouter(
     prefix='/reservations',
@@ -23,7 +24,7 @@ def room_has_conflict(db: Session, room_id: int, check_in, check_out, ignore_res
 
 
 @router.post('/', response_model=schemas.ReservationResponse)
-def create_reservation(reservation: schemas.ReservationCreate, db: Session = Depends(get_db)):
+def create_reservation(reservation: schemas.ReservationCreate, db: Session = Depends(get_db), user = Depends(require_role(['ADMIN', 'RECEPCIONIST']))):
     guest = db.query(models.Guest).filter(models.Guest.id == reservation.guest_id).first()
     if not guest:
         raise HTTPException(status_code=404, detail='Guest not found')
@@ -64,7 +65,7 @@ def get_reservation(reservation_id: int, db: Session = Depends(get_db)):
 
 
 @router.put('/{reservation_id}', response_model=schemas.ReservationResponse)
-def update_reservation(reservation_id: int, reservation: schemas.ReservationCreate, db: Session = Depends(get_db)):
+def update_reservation(reservation_id: int, reservation: schemas.ReservationCreate, db: Session = Depends(get_db), user = Depends(require_role(['ADMIN', 'RECEPCIONIST']))):
     db_reservation = db.query(models.Reservation).filter(models.Reservation.id == reservation_id).first()
 
     if not db_reservation:
@@ -103,7 +104,7 @@ def update_reservation(reservation_id: int, reservation: schemas.ReservationCrea
 
 
 @router.delete('/{reservation_id}')
-def delete_reservation(reservation_id: int, db: Session = Depends(get_db)):
+def delete_reservation(reservation_id: int, db: Session = Depends(get_db), user = Depends(require_role(['ADMIN', 'RECEPCIONIST']))):
     db_reservation = db.query(models.Reservation).filter(models.Reservation.id == reservation_id).first()
 
     if not db_reservation:

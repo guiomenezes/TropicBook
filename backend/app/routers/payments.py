@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app import schemas, models
+from app.auth.roles import require_role
 
 router = APIRouter(
     prefix='/payments',
@@ -9,7 +10,7 @@ router = APIRouter(
 )
 
 @router.post('/', response_model=schemas.PaymentResponse)
-def create_payment(payments: schemas.PaymentCreate, db: Session = Depends(get_db)):
+def create_payment(payments: schemas.PaymentCreate, db: Session = Depends(get_db), user = Depends(require_role(['ADMIN', 'RECEPCIONIST']))):    
     reservation = db.query(models.Reservation).filter(models.Reservation.id == payments.reservation_id).first()
 
     if not reservation:
@@ -40,7 +41,7 @@ def get_payment(payment_id: int, db: Session = Depends(get_db)):
     return db_payment
 
 @router.put('/{payment_id}', response_model=schemas.PaymentResponse)
-def update_payment(payment_id: int, payment: schemas.PaymentCreate, db: Session = Depends(get_db)):
+def update_payment(payment_id: int, payment: schemas.PaymentCreate, db: Session = Depends(get_db), user = Depends(require_role(['ADMIN', 'RECEPCIONIST']))):
     db_payment = db.query(models.Payment).filter(models.Payment.id == payment_id).first()
 
     if not db_payment:
@@ -65,7 +66,7 @@ def update_payment(payment_id: int, payment: schemas.PaymentCreate, db: Session 
     return db_payment
 
 @router.delete('/{payment_id}')
-def delete_payment(payment_id: int, db: Session = Depends(get_db)):
+def delete_payment(payment_id: int, db: Session = Depends(get_db), user = Depends(require_role(['ADMIN']))):
     db_payment = db.query(models.Payment).filter(models.Payment.id == payment_id).first()
 
     if not db_payment:
