@@ -39,7 +39,7 @@ def update_reservation(db: Session, reservation_id: int, reservation: schemas.Re
     db_reservation = get_reservation_by_id(db, reservation_id)
 
     if not db_reservation:
-        raise HTTPException(status_code=404, detail='Rservation not found')´
+        raise HTTPException(status_code=404, detail='Rservation not found')
     
     guest = db.query(models.Guest).filter(models.Guest.id == reservation.guest_id).first()
 
