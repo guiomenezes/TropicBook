@@ -44,14 +44,15 @@ def get_payment(
 
 
 @router.delete('/{payment_id}')
-def delete_payment(
-    payment_id: int,
-    db: Session = Depends(get_db),
-    user = Depends(require_role(['ADMIN']))
-):
+def delete_payment(payment_id: int, db: Session = Depends(get_db), user = Depends(require_role(['ADMIN']))):
     result = payment_service.delete_payment(db, payment_id)
 
     if not result:
         raise HTTPException(status_code=404, detail="Payment not found")
 
     return {"message": "Deleted successfully"}
+
+@router.put('/{payment_id}/pay', response_model=schemas.PaymentResponse)
+def pay_payment(payment_id: int, db: Session = Depends(get_db), user = Depends(require_role(['ADMIN', 'RECEPCIONIST']))):
+    
+    return payment_service.mark_payment_as_paid(db, payment_id)

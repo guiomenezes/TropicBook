@@ -53,6 +53,11 @@ class ReservationResponse(BaseModel):
     class Config:
         from_attributes = True
 
+class ReservationUpdate(BaseModel):
+    guest_id: int
+    room_id: int
+    check_in: date
+    check_out: date
 class PaymentCreate(BaseModel):
     reservation_id: int
     amount: float
