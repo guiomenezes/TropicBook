@@ -1,5 +1,5 @@
 from fastapi import Depends, HTTPException
-from app. auth.deps import get_current_user
+from app.auth.deps import get_current_user
 
 def require_role(allowed_roles: list):
     def role_ckecker(user = Depends(get_current_user)):

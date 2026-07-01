@@ -81,6 +81,8 @@ def update_reservation(db: Session, reservation_id: int, reservation: schemas.Re
     db.commit()
     db.refresh(db_reservation)
 
+    return db_reservation
+
 def get_reservations(db: Session):
     return db.query(models.Reservation).all()
 

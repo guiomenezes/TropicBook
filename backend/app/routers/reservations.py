@@ -54,3 +54,12 @@ def delete_reservation(
         raise HTTPException(status_code=404, detail="Reservation not found")
 
     return {"message": "Deleted successfully"}
+
+@router.put('/{reservation_id}', response_model=schemas.ReservationResponse)
+def update_reservation(
+    reservation_id: int, 
+    reservation: schemas.ReservationUpdate, 
+    db: Session = Depends(get_db), 
+    user = Depends(require_role(['ADMIN', 'RECEPCIONIST']))):
+
+    return reservation_service.update_reservation(db, reservation_id, reservation)

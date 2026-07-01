@@ -58,6 +58,7 @@ class ReservationUpdate(BaseModel):
     room_id: int
     check_in: date
     check_out: date
+    
 class PaymentCreate(BaseModel):
     reservation_id: int
     amount: float
