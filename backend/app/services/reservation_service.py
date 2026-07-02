@@ -99,3 +99,24 @@ def delete_reservation(db: Session, reservation_id: int):
     db.commit()
 
     return db_reservation
+
+def cancel_reservation(db:Session, reservation_id: int):
+    reservation = get_reservation_by_id(db, reservation_id)
+
+    if not reservation:
+        raise HTTPException(status_code=404, detail='Reservation not found')
+    
+    if reservation.status == 'CANCELLED':
+        raise HTTPException(status_code=400, detail='Reservation is already cancelled')
+
+    reservation.status = 'CANCELLED'
+
+    payment = db.query(models.Payment).filter(models.Payment.reservation_id == reservation.id).first()
+
+    if payment and payment.status == 'PENDING':
+        payment.status = 'CANCELLED'
+    
+    db.commit()
+    db.refresh(reservation)
+
+    return reservation
