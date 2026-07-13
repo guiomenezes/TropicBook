@@ -29,6 +29,8 @@ class Reservation(Base):
     room_id = Column(Integer, ForeignKey('rooms.id'), nullable=False)
     check_in = Column(Date, nullable=False)
     check_out = Column(Date, nullable=False)
+    total_price = Column(Numeric(10, 2), nullable=False)
+    status = Column(String(20), default='CONFIRMED')
 
 class Payment(Base):
     __tablename__ = 'payments'

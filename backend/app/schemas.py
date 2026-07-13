@@ -49,6 +49,8 @@ class ReservationResponse(BaseModel):
     room_id: int
     check_in: date
     check_out: date
+    total_price = Decimal
+    status = str
 
     class Config:
         from_attributes = True

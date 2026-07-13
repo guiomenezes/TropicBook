@@ -63,3 +63,11 @@ def update_reservation(
     user = Depends(require_role(['ADMIN', 'RECEPCIONIST']))):
 
     return reservation_service.update_reservation(db, reservation_id, reservation)
+
+@router.put('/{reservation_id}/cancel', response_model=schemas.ReservationResponse)
+def cancel_reservation(
+    reservation_id: int, 
+    db: Session = Depends(get_db), 
+    user = Depends(require_role(['ADMIN', 'RECEPCIONIST']))):
+    
+    return reservation_service.cancel_reservation(db, reservation_id)
