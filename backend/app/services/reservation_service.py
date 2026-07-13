@@ -27,11 +27,34 @@ def create_reservation(db: Session, reservation: schemas.ReservationCreate):
     if conflict:
         raise HTTPException(status_code=400, detail='This room is already booked for the selected dates')
     
-    db_reservation = models.Reservation(**reservation.model_dump())
+    nights = (reservation.check_out - reservation.check_in).days
+    
+    total_price = nights * float(room.price)
+
+    db_reservation = models.Reservation(
+        guest_id = reservation.guest_id,
+        room_id = reservation.room_id,
+        check_in = reservation.check_in,
+        check_out = reservation.check_out,
+        total_price = total_price,
+        status = 'CONFIRMED'
+    )
 
     db.add(db_reservation)
     db.commit()
     db.refresh(db_reservation)
+
+    #Cria automaticamente o pagamento associado
+
+    payment = models.Payment(
+        reservation_id = db_reservation.id,
+        amount = total_price,
+        payment_method = 'CASH',
+        status = 'PENDING'
+    )
+
+    db.add(payment)
+    db.commit()
 
     return db_reservation
 
@@ -92,7 +115,7 @@ def get_reservation_by_id(db: Session, reservation_id: int):
 def delete_reservation(db: Session, reservation_id: int):
     db_reservation = get_reservation_by_id(db, reservation_id)
 
-    if not reservation_id:
+    if not db_reservation:
         return None
     
     db.delete(db_reservation)
