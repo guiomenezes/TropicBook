@@ -28,8 +28,10 @@ form.addEventListener("submit", async (event) => {
 
     if (!response.ok) {
 
+        console.log(data);
+
         document.getElementById("error-message").textContent =
-            data.detail;
+            JSON.stringify(data);
 
         return;
     }
