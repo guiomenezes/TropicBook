@@ -41,5 +41,5 @@ form.addEventListener("submit", async (event) => {
         data.access_token
     );
 
-    alert("Login realizado com sucesso!");
+    window.location.href = '../pages/dashboard.html';
 });
