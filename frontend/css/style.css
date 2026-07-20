@@ -2,12 +2,6 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f6f9;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 100vh;
 }
 
 .login-container {
@@ -52,4 +46,47 @@ button:hover {
     color: red;
     margin-top: 15px;
     text-align: center;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: #1f2937;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px 0;
+}
+
+.sidebar a:hover {
+    color: #60a5fa;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.header {
+    margin-bottom: 30px;
+}
+
+.card {
+    background:  white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow:  0 0 10px rgba(0,0,0,0.1);
 }
