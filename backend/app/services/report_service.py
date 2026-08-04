@@ -27,7 +27,19 @@ def get_dashaboard_data(db: Session):
         models.Reservation.status == "CONFIRMED"
     ).count()
 
-    monthly_revenue = db.query(models.Reservation).filter(
-        models.Reservation.total_price == "PAID",
-        
+    monthly_revenue = db.query(func.coalesce(func.sum(models.Payment.amount), 0)).filter(
+        models.Payment.status == 'PAID'
+    ).scalar()
+
+    latest_reservations = (
+        db.query(models.Reservation).order_by(models.Reservation.id.desc()).limit(5).all()
     )
+
+    return {
+        'active_reservations': active_reservations,
+        'ocuppied_rooms': occupied_rooms,
+        'today_checkins': today_checkins,
+        'today_checkouts': today_checkouts,
+        'monthly_revenue': monthly_revenue,
+        'latest_reservations': latest_reservations
+    }
