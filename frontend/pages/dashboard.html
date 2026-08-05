@@ -1,18 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TropicBook</title>
+    <title>Dashboard - TropicBook</title>
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+
 </head>
 <body>
 
-    <h1>Painel do TropicBook</h1>
-    <button onclick="window.location.href='rooms.html'">Ver quartos</button>
+    <div class="container">
+        <aside class="sidebar">
 
-    <button id="logout-btn">Sair</button>
+            <h2>TropicBook</h2>
+
+            <ul>
+                <li>
+                    <a href="dashboard.html">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="guests.html">Guests</a>
+                </li>
+
+                <li>
+                    <a href="rooms.html">Rooms</a>
+                </li>
+
+                <li>
+                    <a href="reservations.html">Reservations</a>
+                </li>
+
+                <li>
+                    <a href="payments.html">Payments</a>
+                </li>
+            </ul>
+
+        </aside>
+
+        <main class="main">
+
+            <div class="header">
+
+                <h1>Dashboard</h1>
+
+                <button id="logout-btn">Logout</button>
+
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Guests</h3>
+                    <p id="total-guests">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Active Rooms</h3>
+                    <p id="active-rooms">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Active Reservations</h3>
+                    <p id="active-reservations">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Monthly Revenue</h3>
+                    <p id="monthly-revenue">$0.00</p>
+                </div>
+
+            </div>
+
+            <h2>Recent Reservations</h2>
+
+            <br>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Guest</th>
+                        <th>Room</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                    </tr>
+                </thead>
+                <tbody id="recent-reservations">
+
+                </tbody>
+            </table>
+
+        </main>
+
+    </div>
 
     <script src="../js/dashboard.js"></script>
     
 </body>
+
 </html>
