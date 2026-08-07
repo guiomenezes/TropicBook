@@ -34,10 +34,10 @@ async function loadDashboard() {
         document.getElementById("active-rooms").textContent = 
             data.active_rooms;
         
-        document.getElementById("active_reservations").textContent =
+        document.getElementById("active-reservations").textContent =
             data.active_reservations;
 
-        document.getElementById('monthly_revenue').textContent = 
+        document.getElementById('monthly-revenue').textContent = 
             `$${Number(data.monthly_revenue).toFixed(2)}`;
 
         loadRecentReservations(data.recent_reservations);
