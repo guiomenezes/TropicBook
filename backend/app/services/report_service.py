@@ -10,10 +10,6 @@ def get_dashaboard_data(db: Session):
 
     total_guests = db.query(models.Guest).count()
 
-    active_rooms = db.query(models.Room).filter(
-        models.Room.is_active == True
-    ).count()
-
     active_reservations = db.query(models.Reservation).filter(
         models.Reservation.status == "CONFIRMED"
     ).count()
@@ -54,7 +50,6 @@ def get_dashaboard_data(db: Session):
 
     return {
         "total_guests": total_guests,
-        "active_rooms": active_rooms,
         "active_reservations": active_reservations,
         "monthly_revenue": float(monthly_revenue),
         "recent_reservations": recent_reservations
