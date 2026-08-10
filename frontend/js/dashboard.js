@@ -26,6 +26,10 @@ async function loadDashboard() {
             return;
         }
 
+        if (!response.ok) {
+            throw new Error("Failed to load dashboard data.");
+        }
+
         const data = await response.json();
 
         document.getElementById("total-guests").textContent = 
