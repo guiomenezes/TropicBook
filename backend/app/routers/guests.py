@@ -39,7 +39,7 @@ def update_guest(guest_id: int, guest: schemas.GuestCreate, db: Session = Depend
 
     return db_guest
 
-@router.delete("/{guest.id}")
+@router.delete("/{guest_id}")
 def delete_guest(guest_id: int, db: Session = Depends(get_db)):
     db_guest = db.query(models.Guest).filter(models.Guest.id == guest_id).first()
 

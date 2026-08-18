@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guests - TropicBook</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="container">
+
+        <!--SIDEBAR-->
+        <aside class="sidebar">
+            <h2>TropicBook</h2>
+
+            <ul>
+
+                <li>
+                    <a href="dashboard.html">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="guests.html">Guests</a>
+                </li>
+
+                <li>
+                    <a href="rooms.html">Rooms</a>
+                </li>
+
+                <li>
+                    <a href="reservations.html">Reservations</a>
+                </li>
+
+                <li>
+                    <a href="payments.html">Payments</a>
+                </li>
+            </ul>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+         <main class="main">
+
+            <!-- HEADER -->
+             <div class="header">
+
+                <h1>Guests</h1>
+
+                <button id="logout-btn">
+                    Logout
+                </button>
+
+             </div>
+
+             <!-- ADD GUEST -->
+              <div class="card">
+
+                <h2>Add Guest</h2>
+
+                <form id="guest-form">
+                    <input type="text" 
+                    id="name"
+                    placeholder="First name"
+                    required
+                    >
+
+                    <input type="text"
+                    id="last_name"
+                    placeholder="Last name"
+                    required
+                    >
+
+                    <input type="text" 
+                    id="document"
+                    placeholder="Document"
+                    >
+
+                    <input type="text"
+                    id="phone"
+                    placeholder="Phone"
+                    >
+
+                    <input type="text"
+                    id="email"
+                    placeholder="Email"
+                    >
+
+                    <button type="submit">
+                        Add Guest
+                    </button>
+                </form>
+
+                <p id="error-message"></p>
+
+              </div>
+
+              <!-- GUEST LIST -->
+               <h2>Guest List</h2>
+
+               <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Last Name</th>
+                            <th>Document</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="guest-table">
+
+                    </tbody>
+
+               </table>
+
+         </main>
+
+    </div>
+
+    <script src="../js/guests.js"></script>
+    
+</body>
+</html>
