@@ -25,11 +25,18 @@ def list_guests(db: Session = Depends(get_db)):
 @router.get("/{guest_id}", response_model=schemas.GuestResponse)
 def get_guest(guest_id: int, db: Session = Depends(get_db)):
     guest = db.query(models.Guest).filter(models.Guest.id == guest_id).first()
+
+    if not guest:
+        raise HTTPException(status_code=404, detail='Guest not found')
+    
     return guest
 
 @router.put("/{guest_id}", response_model=schemas.GuestResponse)
 def update_guest(guest_id: int, guest: schemas.GuestCreate, db: Session = Depends(get_db)):
     db_guest = db.query(models.Guest).filter(models.Guest.id == guest_id).first()
+
+    if not db_guest:
+        raise HTTPException(status_code=404, detail='Guest not found')
 
     for key, value in guest.model_dump().items():
         setattr(db_guest, key, value)
